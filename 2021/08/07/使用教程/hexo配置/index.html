@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.5k 字
+      3.7k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      42
+      45
        分钟
     </span>
   
@@ -763,6 +763,19 @@
 <h5 id="自定义-CWD"><a href="#自定义-CWD" class="headerlink" title="自定义 CWD"></a>自定义 CWD</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ hexo --cwd <span class="hljs-regexp">/path/</span>to/cwd<br></code></pre></td></tr></table></figure>
 
 <p>自定义当前工作目录（Current working directory）的路径。</p>
+<h2 id="主题使用"><a href="#主题使用" class="headerlink" title="主题使用"></a>主题使用</h2><h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><p>Hexo 5.0.0 版本以上，推荐通过 npm 直接安装，进入博客目录执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> npm install --save hexo-theme-fluid</span><br></code></pre></td></tr></table></figure>
+<p>然后在博客目录下创建 _config.fluid.yml，将主题的 _config.yml 内容复制进去。</p>
+<h3 id="指定主题"><a href="#指定主题" class="headerlink" title="指定主题"></a>指定主题</h3><p>如下修改 Hexo 博客目录中的 _config.yml：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">theme: fluid  # 指定主题<br>language: zh-CN  # 指定语言，会影响主题显示的语言，按需修改<br></code></pre></td></tr></table></figure>
+<h3 id="创建【关于我】"><a href="#创建【关于我】" class="headerlink" title="创建【关于我】"></a>创建【关于我】</h3><p>首次使用主题的「关于页」需要手动创建：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> hexo new page about</span><br></code></pre></td></tr></table></figure>
+<p>创建成功后，编辑博客目录下 /source/about/index.md，添加 layout 属性。</p>
+<p>修改后的文件示例如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">---<br>title: about<br>date: 2020-02-23 19:20:33<br>layout: about<br>---<br></code></pre></td></tr></table></figure>
+<p>这里写关于页的正文，支持 Markdown, HTML</p>
+<h4 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h4><p>在博客目录下执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> npm update --save hexo-theme-fluid</span><br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>

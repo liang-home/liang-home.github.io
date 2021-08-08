@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      21 字
+      383 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      5
        分钟
     </span>
   
@@ -232,8 +232,47 @@
             <h1 style="display: none">GitLab安装与卸载</h1>
             
             <div class="markdown-body">
-              <h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h3><p>若要使用docker安装需提前安装好docker。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2>
+              <blockquote>
+<p> 本文教程使用docker进行安装，若要使用docker安装需提前安装好docker。</p>
+</blockquote>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><h3 id="官网地址"><a href="#官网地址" class="headerlink" title="官网地址"></a>官网地址</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">https://hub.docker.com/search/<br></code></pre></td></tr></table></figure>
+
+<p>在搜索栏搜<code>gitlab</code>，进行下载，或者直接访问下载页</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">https://hub.docker.com/r/gitlab/gitlab-ce/tags?page=1&amp;ordering=last_updated<br></code></pre></td></tr></table></figure>
+
+<h3 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 后边的版本根据实际情况选择下载</span><br>docker pull gitlab/gitlab-ce:13.12.9-ce.0<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h3><h4 id="创建文件目录"><a href="#创建文件目录" class="headerlink" title="创建文件目录"></a>创建文件目录</h4><p>通常将 GitLab 的配置 (etc) 、 日志 (log) 、数据 (data) 放到容器之外， 便于日后升级， 因此先创建这三个目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir -p /opt/mydata/gitlab/etc<br>mkdir -p /opt/mydata/gitlab/log<br>mkdir -p /opt/mydata/gitlab/data<br></code></pre></td></tr></table></figure>
+
+<h4 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h4><p>准备好这三个目录之后， 就可以开始运行 Docker 镜像了。 我的建议是使用unless-stopped 作为重启策略，<br>因为这样可以手工停止容器， 方便维护。</p>
+<p>完整的运行命令如下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs gradle">sudo docker run \<br>    --detach \<br>    --publish <span class="hljs-number">9443</span>:<span class="hljs-number">443</span> \<br>    --publish <span class="hljs-number">9000</span>:<span class="hljs-number">80</span> \<br>    --name gitlab \<br>    --restart unless-stopped \<br>    -v <span class="hljs-regexp">/opt/my</span>data<span class="hljs-regexp">/gitlab/</span>etc:<span class="hljs-regexp">/etc/gi</span>tlab \<br>    -v <span class="hljs-regexp">/opt/my</span>data<span class="hljs-regexp">/gitlab/</span>log:<span class="hljs-regexp">/var/</span>log/gitlab \<br>    -v <span class="hljs-regexp">/opt/my</span>data<span class="hljs-regexp">/gitlab/</span>data:<span class="hljs-regexp">/var/</span>opt/gitlab \<br>    gitlab/gitlab-ce:<span class="hljs-number">13.12</span>.<span class="hljs-number">9</span>-ce.<span class="hljs-number">0</span><br>    <br>    --privileged=<span class="hljs-keyword">true</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：</p>
+<p>端口根据自己需求进行修改</p>
+<p>此处的命令中的路径以及版本要和上边的保持一致</p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置主机"><a href="#配置主机" class="headerlink" title="配置主机"></a>配置主机</h3><p>修改/opt/mydata/gitlab/etc/gitlab.rb</p>
+<ul>
+<li>把external_url改成部署机器的域名或者IP地址</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> vi /opt/mydata/gitlab/etc/gitlab.rb</span><br></code></pre></td></tr></table></figure>
+
+<p>搜索关键字<code>external_url</code>修改值为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">external_url &#x27;http://106.14.65.186&#x27;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改/mnt/gitlab/data/gitlab-rails/etc/gitlab.yml</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">vi <span class="hljs-regexp">/opt/my</span>data<span class="hljs-regexp">/gitlab/</span>data<span class="hljs-regexp">/gitlab-rails/</span>etc/gitlab.yml<br></code></pre></td></tr></table></figure>
+
+
             </div>
             <hr>
             <div>
